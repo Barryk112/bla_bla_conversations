@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <h2 class="post-title">{{ conversation.title }}</h2>
+            <p class="post-subtitle">{{ conversation.author }} | {{ conversation.created_on }}</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-10 col-sm-8">
+                {% if "placeholder" in conversation.featured_image.url %}
+                <img src="//:0" alt="">
+                {% else %}
+                <img src=" {{ conversation.featured_image.url }}" width="100%">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10 card mb-4 mt-4">
+            <div class="card-body">
+                <p class="card-text">
+                    {{ conversation.content | safe }}
+                </p>
+                <div class="row">
+                    <div class="col-1">
+                        <strong class="text-secondary"><i class="far fa-heart"></i> {{ conversation.number_of_likes }} </strong>
+                    </div>
+                    <div class="col-1">
+                        {% with comments.count as total_comments %}
+                        <strong class="text-secondary">
+                            <i class="far fa-comments"></i> {{ total_comments }}
+                        </strong>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-10 card mb-4  mt-4 ">
+            <h3>Comments:</h3>
+            <div class="card-body">
+                {% for comment in comments %}
+                <div class="comments" style="padding: 10px;">
+                    <p class="font-weight-bold">
+                        {{ comment.name }}
+                        <span class=" text-muted font-weight-normal">
+                            {{ comment.created_on }}
+                        </span> wrote:
+                    </p>
+                    {{ comment.body | linebreaks }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
