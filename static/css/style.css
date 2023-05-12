@@ -1,5 +1,5 @@
 #body {
-    background-color: #404040;
+    background-color: #333333;
     color: white;
 }
 
@@ -17,6 +17,11 @@
 
 a {
     text-decoration: none !important;
+    color: #33C8FF !important;
+}
+
+.form > h2{
+    justify-content: center;
 }
 
 /* Helper styles */

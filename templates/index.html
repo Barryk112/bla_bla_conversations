@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         {% for conversation in conversationpost_list %}
         <div class="col-10 col-md-8">
-            <div class="card mb-4">
+            <div class="card text-bg-dark mb-4">
                 <div class="card-body">
                     <div class="image-container">
                         <div class="image-flash">
@@ -23,7 +23,7 @@
                         <img class="card-img" src="{{ conversation.featured_image.url }}">
                         {% endif %}
                     <hr/>
-                    <p class="card-text text-muted h6">{{ conversation.created_on}}
+                    <p class="card-text h6">{{ conversation.created_on}}
                         <i class="far fa-heart"></i>{{ conversation.number_of_likes }}
                     </p>
                 </div>
