@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.http import HttpResponseRedirect
 from .models import ConversationPost
 from .forms import CommentForm
 
@@ -67,3 +68,15 @@ class ConversationDetail(View):
                 "comment_form": comment_form
             },
         )
+class ConversationLike(View):
+
+    def post(self, request, slug):
+        conversation = get_object_or_404(ConversationPost, slug=slug)
+
+        if conversation.likes.filter(id=request.user.id).exists():
+            conversation.likes.remove(request.user)
+        else:
+            conversation.likes.add(request.user)
+
+        # Reloads page once like is clicked to update
+        return HttpResponseRedirect(reverse('conversation_detail', args=[slug]))

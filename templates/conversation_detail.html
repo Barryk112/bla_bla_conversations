@@ -31,15 +31,27 @@
                         {{ conversation.content | safe }}
                     </p>
                     <div class="row">
-                        <div class="col-1">
-                            <strong class="text-secondary"><i class="far fa-heart"></i>
-                                {{ conversation.number_of_likes }} </strong>
-                        </div>
-                        <div class="col-1">
-                            {% with comments.count as total_comments %}
-                            <strong class="text-secondary">
-                                <i class="far fa-comments"></i> {{ total_comments }}
+                        <div class="col-3">
+                            <strong>
+                                {% if user.is_authenticated %}
+                                <form class="d-inline" action="{% url 'conversation_like' conversation.slug %}" method="POST">
+                                    {% csrf_token %}
+                                    {% if liked %}
+                                    <button type="submit" name="conversation_id" value="{{concersation.slug}}" class="btn btn-dark"><i class="fas fa-heart"></i></button>
+                                    {% else %}
+                                    <button type="submit" name="conversation_id" value="{{conversation.slug}}" class="btn btn-dark"><i class="far fa-heart"></i></button>
+                                    {% endif %}
+                                </form>
+                                {% else %}
+                                <span class="text-secondary"><i class="far fa-heart"></i></span>
+                                {% endif %}
+                            <span class="text-secondary">{{ conversation.number_of_likes }} </span>
                             </strong>
+                        </div>
+                        <div class="col-3">
+                            {% with comments.count as total_comments %}
+                            <span class="btn btn-dark"><i class="far fa-comments"></i></span>
+                            <strong class="text-secondary"> {{ total_comments }}</strong>
                             {% endwith %}
                         </div>
                     </div>
