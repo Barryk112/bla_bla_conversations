@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import ConversationPost
-from .forms import CommentForm
+from .forms import CommentForm, ConversationForm
 
 
 class ConversationList(generic.ListView):
@@ -32,7 +32,7 @@ class ConversationDetail(View):
                 "conversation": conversation,
                 "comments": comments,
                 "commented": False,
-                "liked": liked, 
+                "liked": liked,
                 "comment_form": CommentForm()
             },
         )
@@ -45,7 +45,7 @@ class ConversationDetail(View):
         if conversation.likes.filter(id=self.request.user.id).exists():
             liked = True
 
-        comment_form = CommentForm(data=request.POST)
+        comment_form = CommentForm(request.POST)
 
         # Checks if comment is valid and saves it
         if comment_form.is_valid():
@@ -68,6 +68,8 @@ class ConversationDetail(View):
                 "comment_form": comment_form
             },
         )
+
+
 class ConversationLike(View):
 
     def post(self, request, slug):
@@ -80,3 +82,35 @@ class ConversationLike(View):
 
         # Reloads page once like is clicked to update
         return HttpResponseRedirect(reverse('conversation_detail', args=[slug]))
+
+
+# work in progress!! :(
+class NewConversationPost(View):
+
+    def get(self, request):
+        return render(
+            request,
+            "new_conversation.html",
+            {
+                "conversation_form": ConversationForm()
+            },
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        conversation_form = ConversationForm(request.POST)
+
+        if conversation_form.is_valid():
+            conversation_form.instance = request.user.username
+            conversation_form.save()
+        else:
+            conversation_form = ConversationForm()
+
+        return render(
+            request,
+            "index.html", 
+            {
+                "conversation_form": conversation_form,
+            }
+        )
+    

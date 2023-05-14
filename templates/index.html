@@ -2,7 +2,22 @@
 
 {% block content %}
 
-<div class="col">
+
+<!-- Authenticated user to post -->
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-2 mb-4">
+            <a href="{% url 'new_conversation' %}">
+                <button type="button" class="btn btn-info">Start a conversation</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Users conversation posts -->
+<div class="container">
     <div class="row justify-content-center">
         {% for conversation in conversationpost_list %}
         <div class="col-10 col-md-8">
