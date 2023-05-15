@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import ConversationPost
 from .forms import CommentForm, ConversationForm
 from django.utils.text import slugify
+
 
 
 class ConversationList(generic.ListView):
@@ -85,7 +86,6 @@ class ConversationLike(View):
         return HttpResponseRedirect(reverse('conversation_detail', args=[slug]))
 
 
-# work in progress!! :(
 class NewConversationPost(View):
 
     def get(self, request):
@@ -104,7 +104,38 @@ class NewConversationPost(View):
             conversation_post.author = request.user
             conversation_post.slug = slugify(conversation_post.title)
             conversation_post.save()
-            return redirect('index.html')
+            return redirect('home')
         else:
             # pass the form with errors to the template
             return render(request, 'new_conversation.html', {'conversation_form': conversation_form})
+
+
+class EditConversationPost(View):
+    def get(self, request, slug):
+        # Gets the current conversation post
+        conversation = get_object_or_404(ConversationPost, slug=slug, author=request.user)
+        # Populates the form with the current conversation details
+        conversation_form = ConversationForm(instance=conversation)
+        return render(request, 'edit_conversation.html', {
+            'conversation': conversation,
+            'conversation_form': conversation_form,
+        })
+
+    def post(self, request, slug):
+        conversation = get_object_or_404(ConversationPost, slug=slug, author=request.user)
+        conversation_form = ConversationForm(request.POST, instance=conversation)
+        if conversation_form.is_valid():
+            conversation_form.save()
+            return redirect('conversation_detail', slug=conversation.slug)
+        else:
+            return render(request, 'edit_conversation.html', {
+                'conversation': conversation,
+                'conversation_form': conversation_form,
+            })
+
+
+class DeleteConversationPost(View):
+    def post(self, request, slug):
+        conversation = get_object_or_404(ConversationPost, slug=slug, author=request.user)
+        conversation.delete()
+        return redirect('home')

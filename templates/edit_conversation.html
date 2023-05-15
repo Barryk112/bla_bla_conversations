@@ -4,6 +4,8 @@
 
 {% load crispy_forms_tags %}
 
+<h1>Edit Conversation Post</h1>
+
 {% if conversation_form.errors %}
 <div class="container">
     <div class="row justify-content-center">
@@ -26,13 +28,15 @@
         <div class="col-8 card text-bg-dark mb-4 mt-4">
             <div class="card-body">
                 <p>Posting as: {{ user.username }}</p>
-                <form method="post" style="margin-top: 1.3em;" action="{% url 'new_conversation' %}">
-                    {{ conversation_form | crispy }}
+                <form method="post" style="margin-top: 1.3em;" action="{% url 'edit_conversation' conversation.slug %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-info mt-4 mb-4">Submit</button>
+                    {{ conversation_form|crispy }}
+                    <button type="submit" class="btn btn-info mt-4 mb-4">Update</button>
                 </form>
             </div>
         </div>
     </div>
+</div>
+
 
 {% endblock %}

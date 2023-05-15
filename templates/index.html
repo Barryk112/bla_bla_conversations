@@ -30,7 +30,6 @@
                     </div>
                     <a href="{% url 'conversation_detail' conversation.slug %}" class="post-link">
                         <h2 class="card-title">{{ conversation.title }}</h2>
-                        <p class="card-text">{{ conversation.excerpt }}</p>
                     </a>
                     {% if "placeholder" in conversation.featured_image.url %}
                         <img class="card-img" src="//:0" alt="">

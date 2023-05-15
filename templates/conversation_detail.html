@@ -55,6 +55,14 @@
                             {% endwith %}
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            {% if request.user == conversation.author %}
+                            <a href="{% url 'edit_conversation' conversation.slug %}">Edit</a>
+                            <a href="{% url 'delete_conversation' conversation.slug %}">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
         </div>
     </div>
