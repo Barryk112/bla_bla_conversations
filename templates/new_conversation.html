@@ -4,12 +4,24 @@
 
 {% load crispy_forms_tags %}
 
+{% if conversation_form.errors %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field, errors in conversation_form.errors.items %}
+        {% for error in errors %}
+          <li>{{ field|title }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10 card text-bg-dark mb-4 mt-4">
             <div class="card-body">
                 <p>Posting as: {{ user.username }}</p>
-                <form method="post" style="margin-top: 1.3em;">
+                <form method="post" style="margin-top: 1.3em;" action="{% url 'new_conversation' %}">
                     {{ conversation_form | crispy }}
                     {% csrf_token %}
                     <button type="submit" class="btn btn-info">Submit</button>

@@ -3,6 +3,7 @@ from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import ConversationPost
 from .forms import CommentForm, ConversationForm
+from django.utils.text import slugify
 
 
 class ConversationList(generic.ListView):
@@ -97,20 +98,13 @@ class NewConversationPost(View):
         )
 
     def post(self, request, *args, **kwargs):
-
-        conversation_form = ConversationForm(request.POST)
-
+        conversation_form = ConversationForm(request.POST, request.FILES)
         if conversation_form.is_valid():
-            conversation_form.instance = request.user.username
-            conversation_form.save()
+            conversation_post = conversation_form.save(commit=False)
+            conversation_post.author = request.user
+            conversation_post.slug = slugify(conversation_post.title)
+            conversation_post.save()
+            return redirect('index.html')
         else:
-            conversation_form = ConversationForm()
-
-        return render(
-            request,
-            "index.html", 
-            {
-                "conversation_form": conversation_form,
-            }
-        )
-    
+            # pass the form with errors to the template
+            return render(request, 'new_conversation.html', {'conversation_form': conversation_form})
