@@ -135,6 +135,13 @@ class EditConversationPost(View):
 
 
 class DeleteConversationPost(View):
+    def get(self, request, slug):
+        conversation = get_object_or_404(ConversationPost, slug=slug, author=request.user)
+        conversation_form = ConversationForm(instance=conversation)
+        return render(request, 'delete_conversation.html', {
+            'conversation': conversation
+        })
+
     def post(self, request, slug):
         conversation = get_object_or_404(ConversationPost, slug=slug, author=request.user)
         conversation.delete()

@@ -6,10 +6,10 @@
 <!-- Authenticated user to post -->
 {% if user.is_authenticated %}
 <div class="container">
-    <div class="row">
-        <div class="col-10 offset-2 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-10 mb-4">
             <a href="{% url 'new_conversation' %}">
-                <button type="button" class="btn btn-info">Start a conversation</button>
+                <button type="button" class="btn btn-outline-info">Start a conversation</button>
             </a>
         </div>
     </div>
@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row justify-content-center">
         {% for conversation in conversationpost_list %}
-        <div class="col-10 col-md-8">
+        <div class="col-10">
             <div class="card text-bg-dark mb-4">
                 <div class="card-body">
                     <div class="image-container">
@@ -28,8 +28,8 @@
                             <p class="author">Posted by: {{ conversation.author }}</p>
                         </div>
                     </div>
-                    <a href="{% url 'conversation_detail' conversation.slug %}" class="post-link">
-                        <h2 class="card-title">{{ conversation.title }}</h2>
+                    <a href="{% url 'conversation_detail' conversation.slug %}" class="highlight">
+                        <h3 class="card-title">{{ conversation.title }}</h3>
                     </a>
                     {% if "placeholder" in conversation.featured_image.url %}
                         <img class="card-img" src="//:0" alt="">

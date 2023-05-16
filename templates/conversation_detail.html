@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-10">
-            <h2 class="post-title">{{ conversation.title }}</h2>
+            <h3 class="post-title">{{ conversation.title }}</h3>
             <p class="post-subtitle">{{ conversation.author }} | {{ conversation.created_on }}</p>
         </div>
         <div class="row justify-content-center">
@@ -43,7 +43,7 @@
                                     {% endif %}
                                 </form>
                                 {% else %}
-                                <span class="text-secondary"><i class="far fa-heart"></i></span>
+                                <button class="btn btn-dark"><i class="far fa-heart"></i></button>
                                 {% endif %}
                             <span class="text-secondary">{{ conversation.number_of_likes }} </span>
                             </strong>
@@ -55,14 +55,15 @@
                             {% endwith %}
                         </div>
                     </div>
+                    {% if request.user == conversation.author %}
                     <div class="row">
                         <div class="col">
-                            {% if request.user == conversation.author %}
-                            <a href="{% url 'edit_conversation' conversation.slug %}">Edit</a>
-                            <a href="{% url 'delete_conversation' conversation.slug %}">Delete</a>
-                            {% endif %}
+                            <hr>
+                            <button class="btn btn-outline-info "><a href="{% url 'edit_conversation' conversation.slug %}">Edit</a></button>
+                            <button class="btn btn-outline-danger"><a href="{% url 'delete_conversation' conversation.slug %}">Delete</a></button>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
         </div>
     </div>
@@ -72,8 +73,8 @@
             <hr>
         </div>
     </div>
-
     <div class="row justify-content-center">
+        {% if user.is_authenticated %}
         <div class="col-10 card text-bg-dark mb-4  mt-4 ">
             <div class="card-body">
                 {% if commented %}
@@ -81,24 +82,23 @@
                     Your comment is awaiting approval
                 </div>
                 {% else %}
-                {% if user.is_authenticated %}
                 <h4>Leave a comment:</h4>
                 <p>Posting as: {{ user.username }}</p>
                 <form method="post" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-info mt-2">Submit</button>
+                    <button type="submit" class="btn btn-outline-info mt-2">Submit</button>
                 </form>
-                {% endif %}
                 {% endif %}
             </div>
         </div>
+        {% endif %}
 
-        <h4>Comments:</h4>
-        <div class="col-10 card text-bg-dark mb-4  mt-2">
+        <div class="col-10 card text-bg-dark mb-4 mt-4">
             <div class="card-body">
+                <h4>Comments:</h4>
                 {% for comment in comments %}
-                <div class="comments" style="padding: 10px;">
+                <div>
                     <p class="font-weight-bold">
                         {{ comment.name }} |
                         <span class=" font-weight-normal">
@@ -107,6 +107,7 @@
                     </p>
                     {{ comment.body | linebreaks }}
                 </div>
+                <hr>
                 {% endfor %}
             </div>
         </div>
