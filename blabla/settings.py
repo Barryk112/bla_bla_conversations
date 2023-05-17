@@ -110,13 +110,13 @@ WSGI_APPLICATION = 'blabla.wsgi.application'
 #     }
 # }
 
+# This is the elephantSQL database
+#DATABASES = {
+#   'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#}
 
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    }
-else:
-    DATABASES = {
+# This is the database for TESTING leave commented out unless your testing!
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
