@@ -26,7 +26,7 @@
         <div class="col-8 card text-bg-dark mb-4 mt-4">
             <div class="card-body">
                 <p>Posting as: {{ user.username }}</p>
-                <form method="post" style="margin-top: 1.3em;" action="{% url 'new_conversation' %}">
+                <form method="post" style="margin-top: 1.3em;" action="{% url 'new_conversation' %}" enctype="multipart/form-data">
                     {{ conversation_form | crispy }}
                     {% csrf_token %}
                     <button type="submit" class="btn btn-info mt-4 mb-4">Submit</button>
