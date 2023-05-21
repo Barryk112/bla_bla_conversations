@@ -34,7 +34,7 @@
                     {% if "placeholder" in conversation.featured_image.url %}
                         <img class="card-img" src="//:0" alt="">
                         {% else %}
-                        <img class="card-img" src="{{ conversation.featured_image.url }}">
+                        <img class="card-img" src="{{ conversation.featured_image.url }}" alt="Coversation image">
                         {% endif %}
                     <hr/>
                     <p class="card-text h6">{{ conversation.created_on}}
