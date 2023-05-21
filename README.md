@@ -1,108 +1,78 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# BlaBla. The conversations app #
 
-Welcome Barryk112,
+## **UX Design** ##
+I desinged this app with a mobile first approch as social media apps are mainly used by mobile.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+The conversation posts are displayed in a card and this theme is consistant on all pages.
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+I went with a dark theme for this app as it is easier and more pleasing to look at.
 
-## Gitpod Reminders
+### **Theme colours:** ###
+**Background: #333333** - This is a dark grey colour and gives the over all dark theme
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+**App Logo: #33C8FF** - This is what I call BlaBla Blue, it is a light blue that contrasts well ontop of the dark grey background, this colour is also used for the app buttons like "create new conversation", "login/logout" ect.. This ties the overall theme together nicely
 
-`python3 -m http.server`
+**Conversation cards** - These cards are styled with Bootstrap card-bg-dark, this colour is a slightly darker grey than the background and gives a nice contrast.
 
-A blue button should appear to click: _Make Public_,
 
-Another blue button should appear to click: _Open Browser_.
+## **Features** ##
+* Register a new account.
+* Log in and Log out of user accounts.
+* Create a conversation post.
+* Attach images to a conversation post.
+* Like and unlike a conversation post.
+* Leave a comment on a conversation post.
+* Edit existing conversation posts.
+* Delete conversation posts.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
 
-A blue button should appear to click: _Make Public_,
+## **Technologies used** ##
+* **Django** - This is the framework used for the app.
+* **Gunicorn** - HTTP server.
+* **Psycopg2** - Allows connextion to SQL databse.
+* **Cloudinary** - Database used for storing images.
+* **AllAuth** - User authentication.
+* **Crispyforms** - Handles forms.
+* **Unittest** - Bulit in python tester.
+* **ElephantSQL** - Database.
+* **Heroku** - Deployment of app.
 
-Another blue button should appear to click: _Open Browser_.
+## **Testing** ##
+### **Responsive testing** ###
+Manually tested the resposiveness of the app and found no areas to be sluggish.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+### **Browser compatibility** ###
+Tested app running on Google chrome, Microsoft Edge and Firefox. All working as designed.
 
-To log into the Heroku toolbelt CLI:
+### **Lighthouse testing outcomes** ###
+![picture alt](/README_images/BlaBla_lighthouse_report.PNG"Lighthouse report")
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+### **Code validation** ###
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+### **User stories testing** ###
+Manually tested all functions described in my user stories, all user story requirements are working as designed.
 
-------
+You can see the user stories in the projects tab of this repo.
 
-## Release History
+### **Python unittest** ###
+Inside tests.py file there unittesting for all the view functions to insure that they are working as designed. The testcase is set up by created a post and creating a user. Creating a user is needed as some views are only displayed for authenticated users. tests.py makes sure the correct templates are being displayed and the edit and delete views are doing there job.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+**Please note! When carrying out the unittesting you must comment out the default DATABASE in settings.py and comment in the local DATABASE used for testing (Refernace image below)**
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+![picture alt](/README_images/settings.py_testing_database.PNG "Lighthouse report")
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+To run these tests run this in the command line - python3 manage.py test
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+![picture alt](/README_images/unittest.PNG "Lighthouse report")
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+### **Design flaws** ###
+* The comment icon has a btn Bootstrap class but is not a button, this may give the user the expression it can be clicked. This is because the Like icon is a button the user can click but this gave it different properties and looked off when beside the comment icon. using the btn class on the comment icon gave the icon the same properties and they now look uniform. In a future update I would like to make the comment icon take you to make a new comment when clicked.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+## **Deployment** ##
+This app was deployed using heroku.
+1. Created a new app in Herkoku.
+2. Linked up my Github repo.
+3. Set my enviroment varibles in Heroku and linked elephantSQL database.
+4. Tunred DEBUG to Flase.
+5. Pushed my finished code to Heroku.
+6. Deployed app.
