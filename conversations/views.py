@@ -112,6 +112,9 @@ class NewConversationPost(View):
 
 class EditConversationPost(View):
     def get(self, request, slug):
+        if not request.user.is_authenticated:
+            # Redirect the user to the login page or handle the unauthenticated user case
+            return redirect('login.html')
         # Gets the current conversation post
         conversation = get_object_or_404(ConversationPost, slug=slug, author=request.user)
         # Populates the form with the current conversation details
